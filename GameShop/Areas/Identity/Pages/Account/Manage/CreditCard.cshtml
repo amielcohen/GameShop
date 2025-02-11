@@ -1,0 +1,72 @@
+﻿@page
+@using Microsoft.IdentityModel.Tokens
+@model CreditCardModel
+@{
+    ViewData["Title"] = "Credit Card";
+    ViewData["ActivePage"] = ManageNavPages.CreditCard;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="CreditCard-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <div class="form-floating mb-3">
+                    @{
+                        // Ensure Input is not null before accessing its properties
+                        var input = Model?.Input;
+                        if (input != null)
+                        {
+                            if (!input.cardNumber.IsNullOrEmpty())
+                            {
+                                var maskedCardNumber = Model.DecryptString(input.cardNumber, input.aesKey, input.aesIV);
+                                int cardNumberLength = maskedCardNumber.Length;
+                                int asteriskCount = cardNumberLength - 4;
+                                maskedCardNumber = maskedCardNumber = $"**** **** **** {maskedCardNumber.Substring(asteriskCount)}";
+                                <input asp-for="Input.cardNumber" type="text" class="form-control" value="@maskedCardNumber" placeholder="Please enter your Card Number." />
+                            }
+                            else
+                            {
+                                <input asp-for="Input.cardNumber" type="text" class="form-control" value="" placeholder="Please enter your Card Number." />
+
+                            }
+                        }
+
+                    }
+                    <label asp-for="Input.cardNumber" class="form-label"></label>
+                    <span asp-validation-for="Input.cardNumber" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.month" class="form-control" placeholder="Please enter your Month." />
+                    <label asp-for="Input.month" class="form-label"></label>
+                    <span asp-validation-for="Input.month" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.year" class="form-control" placeholder="Please enter your Year." />
+                    <label asp-for="Input.year" class="form-label"></label>
+                    <span asp-validation-for="Input.year" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    @if (!input.CVC.IsNullOrEmpty())
+                    {
+                        <input asp-for="Input.CVC" type="text" class="form-control" value="***" placeholder="Please enter your CVC." />
+                    }
+                    else
+                    {
+                        <input asp-for="Input.CVC" class="form-control" placeholder="Please enter your CVC." />
+
+                    }
+                    <label asp-for="Input.CVC" class="form-label"></label>
+                    <span asp-validation-for="Input.CVC" class="text-danger"></span>
+                </div>
+
+                <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

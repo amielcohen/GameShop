@@ -1,0 +1,12 @@
+C:\Users\hp\source\repos\GameShop\Shop.Models\bin\Debug\net8.0\Shop.Models.deps.json
+C:\Users\hp\source\repos\GameShop\Shop.Models\bin\Debug\net8.0\Shop.Models.dll
+C:\Users\hp\source\repos\GameShop\Shop.Models\bin\Debug\net8.0\Shop.Models.pdb
+C:\Users\hp\source\repos\GameShop\Shop.Models\obj\Debug\net8.0\Shop.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\source\repos\GameShop\Shop.Models\obj\Debug\net8.0\Shop.Models.AssemblyInfoInputs.cache
+C:\Users\hp\source\repos\GameShop\Shop.Models\obj\Debug\net8.0\Shop.Models.AssemblyInfo.cs
+C:\Users\hp\source\repos\GameShop\Shop.Models\obj\Debug\net8.0\Shop.Models.csproj.CoreCompileInputs.cache
+C:\Users\hp\source\repos\GameShop\Shop.Models\obj\Debug\net8.0\Shop.Models.dll
+C:\Users\hp\source\repos\GameShop\Shop.Models\obj\Debug\net8.0\refint\Shop.Models.dll
+C:\Users\hp\source\repos\GameShop\Shop.Models\obj\Debug\net8.0\Shop.Models.pdb
+C:\Users\hp\source\repos\GameShop\Shop.Models\obj\Debug\net8.0\ref\Shop.Models.dll
+C:\Users\hp\source\repos\GameShop\Shop.Models\obj\Debug\net8.0\Shop.Models.csproj.AssemblyReference.cache

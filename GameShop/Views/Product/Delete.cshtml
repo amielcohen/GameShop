@@ -1,0 +1,49 @@
+﻿@model Product
+
+<form method="post">
+    <input asp-for="id" hidden />
+    <div class="border p-3 mt-4">
+        <div class "row pb-2">
+            <h2 class="text-success">Delete Product</h2>
+            <hr />
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="GameName" class="p-0 text-success"></label>
+            <input asp-for="GameName" disabled class="form-control" />
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="Description" class="p-0 text-success"></label>
+            <input asp-for="Description" disabled class="form-control" />
+
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="Price" class="p-0 text-success"></label>
+            <input asp-for="Price" disabled class="form-control" />
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="ReleaseYear" class="p-0 text-success"></label>
+            <input asp-for="ReleaseYear" disabled class="form-control" />
+
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="Platform" class="p-0 text-success"></label>
+            <input asp-for="Platform" disabled class="form-control" />
+
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-danger form-control">Delete</button>
+
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Product" asp-action="index" class="btn btn-outline-success btn-secondary border form-control">Back to List</a>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+

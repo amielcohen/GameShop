@@ -1,0 +1,128 @@
+﻿@model ProductVM
+
+<form method="post" class="row" enctype="multipart/form-data">
+    <input asp-for="Product.id" hidden />
+    <input asp-for="Product.ImageUrl" hidden />
+    <input asp-for="Product.SoldSoFar" hidden />
+    <input asp-for="Product.SKU" hidden />
+
+    <div class="row">
+        <div class="col-10">
+            <div class="border p-3 mt-4">
+                <div class "row pb-2">
+                    <h2 class="text-success">@(Model.Product.id != 0 ? "Update" : "Create") Product</h2>
+                    <hr />
+                </div>
+
+                @* <div asp-validation-summary="All"></div> *@
+
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.GameName" class="p-0 text-success"></label>
+                    <input asp-for="Product.GameName" class="form-control">
+                    <span asp-validation-for="Product.GameName" class="text-danger"></span>
+                </div>
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.Description" class="p-0 text-success"></label>
+                    <textarea asp-for="Product.Description" class="form-control"></textarea>
+                    <span asp-validation-for="Product.Description" class="text-danger"></span>
+
+                </div>
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.Price" class="p-0 text-success"></label>
+                    <input asp-for="Product.Price" class="form-control" min="1" />
+                    <span asp-validation-for="Product.Price" class="text-danger"></span>
+                </div>
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.Discount" class="p-0 text-success"></label>
+                    <input asp-for="Product.Discount" class="form-control" min="0" />
+                    <span asp-validation-for="Product.Discount" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.ReleaseYear" class="p-0 text-success"></label>
+                    <input asp-for="Product.ReleaseYear" class="form-control" min="1900" max="@DateTime.Now.Year" />
+                    <span asp-validation-for="Product.ReleaseYear" class="text-danger"></span>
+
+                </div>
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.Platform" class="p-0 text-success"></label>
+                    <select asp-for="Product.Platform" class="form-select">
+                        <option disabled selected>--Select Platform--</option>
+                        <option value="PS4">PS4</option>
+                        <option value="PS5">PS5</option>
+                        <option value="XBOX ONE">XBOX ONE</option>
+                        <option value="XBOX Series">XBOX Series</option>
+                        <option value="Nintendo Switch">Nintendo Switch</option>
+                    </select>
+                    <span asp-validation-for="Product.Platform" class="text-danger"></span>
+
+                </div>
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.CategoryId" class="p-0 text-success"></label>
+                    <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+                        <option disabled selected>--Select Category--</option>
+                    </select>
+                    <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+
+                </div>
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.PEGI" class="p-0 text-success"></label>
+                    <select asp-for="Product.PEGI" class="form-select">
+                        <option disabled selected>--Select PEGI--</option>
+                        <option value="3">PEGI 3</option>
+                        <option value="7">PEGI 7</option>
+                        <option value="12">PEGI 12</option>
+                        <option value="16">PEGI 16</option>
+                        <option value="18">PEGI 18</option>
+                    </select>
+                    <span asp-validation-for="Product.PEGI" class="text-danger"></span>
+                </div>
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.Stock" class="p-0 text-success"></label>
+                    <input asp-for="Product.Stock" class="form-control" min="0" />
+                    <span asp-validation-for="Product.Stock" class="text-danger"></span>
+                </div>
+                
+                <div class="mb-3 row p-1">
+                    <label asp-for="Product.ImageUrl" class="p-0 text-success"></label>
+                    <input type="file" name="file" class="form-control" />
+                    <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
+
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        @if (Model.Product.id != 0)
+                        {
+                            <button type="submit" class="btn btn-success form-control">Update</button>
+
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-success form-control">Create</button>
+
+                        }
+
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Product" asp-action="index" class="btn btn-outline-success btn-secondary border form-control">Back to List</a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-2">
+            <img src="@Model.Product.ImageUrl" width="100%"
+                style="border-radius:5px; border:1px solid #bbb9b9" />
+        </div>
+
+    </div>
+   
+</form>
+
+@section Scripts{
+    @{
+   <partial name="_ValidationScriptsPartial" />
+}
+    
+}

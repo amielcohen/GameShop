@@ -1,0 +1,119 @@
+﻿@model ShoppingCart
+<form method="post">
+    <input hidden asp-for="ProductId" />
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-secondary bg-gradient text-light py-4">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h3 class="text-dark text-uppercase">@Model.Product.GameName</h3>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="py-3">
+                <div class="row">
+                    <div class="col-6 col-md-2 offset-lg-1 pb-1">
+                        <a asp-action="Index" class="btn btn-outline-primary bg-gradient mb-5 fw-semibold btn-sm text-uppercase">
+                            <small>Back to home</small>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
+                        <img src="@Model.Product.ImageUrl" width="100%" class="rounded" />
+                    </div>
+
+                    <div class="col-12 col-lg-6 offset-lg-1">
+
+                        <div class="col-12 col-md-6 pb-4">
+                            <span class="badge" style="background-color: orange;">@Model.Product.Category.Name</span>
+                        </div>
+                        <div class="row ps-2">
+                            <h6 class="text-secondary text-opacity-50 ">SKU : @Model.Product.SKU</h6>
+                            <h6 class="text-dark text-opacity-50 ">Platform : @Model.Product.Platform</h6>
+                            <h6 class="text-dark text-opacity-50 ">Released : @Model.Product.ReleaseYear</h6>
+                            @if (Model.Product.Discount == 0)
+                            {
+                                <h6 class="text-dark text-opacity-50 ">Price : @Model.Product.Price$</h6>
+                            }
+                            else
+                            {
+                                <h6 class="text-dark text-opacity-50 ">Original Price:<del>@Model.Product.Price$</del></h6>
+                                <h6 class="text-dark text-opacity-50 ">Now for <b>@Model.Product.Discount%</b> discount: <b>@String.Format("{0:0.##}", Model.Product.Price - (Model.Product.Price / 100) * Model.Product.Discount)$</b></h6>
+                            }
+                            <h6 class="text-dark text-opacity-50 "> in stock : @Model.Product.Stock units</h6>
+
+
+                        </div>
+                        <div class="row ps-2">
+                            
+                        <div class="row pl-2 my-3">
+                                <p class="text-secondary lh-sm">@Model.Product.Description</p>
+                        </div
+                        
+                       @if (!User.IsInRole(SD.Role_Admin)&&Model.Product.Stock>0){
+                            
+                        <div class="row pl-2 mb-3">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-white text-dark border-0 fw-semibold"
+                                          id="inputGroup-sizing-default">
+                                        Count
+                                    </span>
+                                        <input asp-for="Count" type="number" value="1" class="form-control text-end" min="1"
+                                           max="@Model.Product.Stock" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+
+                                </div>
+                                    
+                            </div>
+                                
+                        </div>
+                           
+
+                            <div class="row">
+                                <div class="col-6 pb-1">
+                                    <button type="submit"
+                                            class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold" name="submitButton" value="Submit">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                                <div class="col-6 pb-1">
+                                    <button type="submit" class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold"
+                                            name="submitButton" value="Reset">
+                                        Buy Now
+                                    </button>
+                                </div>
+                            </div>
+                          }
+                            @if (!User.IsInRole(SD.Role_Admin)&&Model.Product.Stock < 1)
+                            {
+
+                                <div class="col-6 pb-1">
+                                <p  style="background-color: red; color:white" class="card-title text-center">This Product is Currently Out Of Stock</p>
+
+                                    <button type="submit"
+                                            class="btn btn-info bg-gradient w-100 py-2 text-uppercase fw-semibold" name="submitButton" value="Notify">
+                                        Notify when Back in stock
+                                    </button>
+                                </div>
+                            }
+                        </div>
+
+                </div>
+                    <div class="col-md-3 d-flex justify-content-start align-items-center">
+
+                        <img src="~/images/PEGI_@(Model.Product.PEGI).png" class="rounded small-image" />
+                    </div>
+            </div>
+               
+        </div>
+          
+    </div>
+        
+</form>
+<style>
+    .small-image {
+        width: 70px; /* Adjust the width as needed */
+        height: 70px; /* Automatically adjust the height to maintain aspect ratio */
+    }
+</style>

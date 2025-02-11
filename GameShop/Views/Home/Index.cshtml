@@ -1,0 +1,284 @@
+﻿@model IEnumerable<Product>
+@using Microsoft.AspNetCore.Http
+
+@{
+    List<Category> Categories = ViewBag.Categories;
+}
+
+<div class="row pb-3">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="NameSearch" method="get" class="d-flex">
+                <div class="form-group flex-grow-1">
+                    <input type="text" name="searchName" id="searchName" class="form-control mr-2" placeholder="Search by name">
+                </div>
+                <button type="submit" class="btn btn-outline-success btn-secondary border">Search</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <hr style="border-color: green; border-width: 3px; width: 100%;">
+
+    <div class="row justify-content-center">
+        <form asp-action="Filter" method="get">
+            <div class="d-flex">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <input type="number" name="priceFrom" class="form-control" min="0" placeholder="Price from" value="@((ViewBag.PriceFrom != null && ViewBag.PriceFrom != 0) ? ViewBag.PriceFrom : string.Empty)">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <input type="number" name="priceTo" class="form-control" min="0" placeholder="Price to" value="@((ViewBag.priceTo != null && ViewBag.priceTo != 0) ? ViewBag.priceTo : string.Empty)">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <input type="number" name="yearFrom" class="form-control" min="0" placeholder="Year from" value="@((ViewBag.yearFrom != null && ViewBag.yearFrom != 0) ? ViewBag.yearFrom : string.Empty)">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <input type="number" name="yearTo" class="form-control" min="0" placeholder="Year to" value="@((ViewBag.yearTo != null && ViewBag.yearTo != 0) ? ViewBag.yearTo : string.Empty)">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select name="category" class="form-control">
+                            <option value="0">All Categories</option>
+                            @foreach (var category in ((List<Category>)ViewBag.Categories).OrderBy(u => u.DisplayOrder))
+                            {
+                                <option value="@category.id" selected="@(ViewBag.category == category.id)">@category.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select name="platform" class="form-control">
+                            <option value="All" selected="@(ViewBag.SelectedPlatform == "All")">All Platforms</option>
+                            <option value="PS4" selected="@(ViewBag.SelectedPlatform == "PS4")">PS4</option>
+                            <option value="PS5" selected="@(ViewBag.SelectedPlatform == "PS5")">PS5</option>
+                            <option value="XBOX ONE" selected="@(ViewBag.SelectedPlatform == "XBOX ONE")">XBOX ONE</option>
+                            <option value="XBOX Series" selected="@(ViewBag.SelectedPlatform == "XBOX Series")">XBOX Series</option>
+                            <option value="Nintendo Switch" selected="@(ViewBag.SelectedPlatform == "Nintendo Switch")">Nintendo Switch</option>
+                        </select>
+
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select name="PEGI" class="form-control">
+                            <option value="0" selected="@(ViewBag.PEGI == 0)">All PEGI Rate</option>
+                            <option value="3" selected="@(ViewBag.PEGI == 3)">PEGI 3</option>
+                            <option value="7" selected="@(ViewBag.PEGI == 7)">PEGI 7</option>
+                            <option value="12" selected="@(ViewBag.PEGI == 12)">PEGI 12</option>
+                            <option value="16" selected="@(ViewBag.PEGI == 16)">PEGI 16</option>
+                            <option value="18" selected="@(ViewBag.PEGI == 18)">PEGI 18</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select name="saleNpopular" class="form-control">
+                            <option value="All" selected="@(ViewBag.saleNpopular == "All")">All Games</option>
+                            <option value="On Sale" selected="@(ViewBag.saleNpopular == "On Sale")">On Sale</option>
+                            <option value="Most Popular" selected="@(ViewBag.saleNpopular == "Most Popular")">Most Popular</option>
+                            <option value="On Sale&Most Popular" selected="@(ViewBag.saleNpopular =="On Sale&Most Popular")">On Sale&Most Popular</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center align-items-center">
+
+                <div class="col-md-2 text-center">
+                    <button type="submit" class="btn btn-outline-success btn-secondary border btn-lg">Apply</button>
+                </div>
+                <hr style="border-color: green; border-width: 3px; width: 100%;">
+
+            </div>
+        </form>
+
+    </div>
+    <div class="col-md-3 d-flex justify-content-start align-items-center">
+
+        <b>Sort By:</b>
+        @if (Context.Request.Query["sort"] == "down")
+        {
+            <a id="sortButton" href="#" class="btn btn-link">Price ▲</a>
+        }
+        else
+        {
+            <a id="sortButton" href="#" class="btn btn-link">Price ▼</a>
+
+        }
+
+    </div>
+    <hr />
+
+
+
+
+    @if (Model == null || !Model.Any())
+    {
+        <p style="text-align: center; font-size: 24px; margin-top: 50px;">No products found.</p>
+    }
+    else
+    {
+
+        @if (Context.Request.Query["sort"] == "down")
+        {
+            @foreach (var product in Model.OrderBy(p => (p.Price - (p.Price * p.Discount / 100))))
+            {
+                <div class="col-lg-3 col-sm-6">
+                    <div class="row p-2">
+                        <div class="col-12 p-1">
+                            <div class="card border-0 p-3 shadow border-top border-5 rounded" style="height: 480px;">
+                                @{
+                                    string imageClass = product.Stock <= 0 ? "transparent-image" : "card-img-top rounded";
+                                }
+
+                                <img src="@product.ImageUrl" class=@(imageClass) style="max-height: 60%;" />
+
+                                <div class="card-body pb-0">
+                                    <div class="pl-1">
+                                        <p class="card-title h5 text-dark opacity-75 text-uppercase text-center">@product.GameName</p>
+                                        @if (product.Discount > 0)
+                                        {
+                                            <p class="card-title text-warning text-center">
+                                                Price:
+                                                <del>@String.Format("{0:0.##}", @product.Price)</del><b>
+                                                    @String.Format("{0:0.##}", product.Price - (product.Price / 100) * product.Discount)$
+                                                </b>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="card-title text-warning text-center">Price: <b>@product.Price$</b></p>
+                                        }
+                                        @if (product.Stock < 1)
+                                        {
+                                            <p class="card-title text-bg-warning text-center">Out Of Stock</p>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                   
+                                        <a asp-action="Details"
+                                           asp-route-productid="@product.id"
+                                           class="btn btn-primary btn-dark bg-gradient border-1 from control">
+                                            Show Details
+                                        </a>
+                                    
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            @foreach (var product in Model.OrderByDescending(p => (p.Price - (p.Price * p.Discount / 100))))
+            {
+                <div class="col-lg-3 col-sm-6">
+                    <div class="row p-2">
+                        <div class="col-12 p-1">
+                            <div class="card border-0 p-3 shadow border-top border-5 rounded" style="height: 480px;">
+                                @{
+                                    string imageClass = product.Stock <= 0 ? "transparent-image" : "card-img-top rounded";
+                                }
+
+                                <img src="@product.ImageUrl" class=@(imageClass) style="max-height: 60%;" />
+                                <div class="card-body pb-0">
+                                    <div class="pl-1">
+                                        <p class="card-title h5 text-dark opacity-75 text-uppercase text-center">@product.GameName</p>
+                                        @if (product.Discount > 0)
+                                        {
+                                            <p class="card-title text-warning text-center">
+                                                Price:
+                                                <del>@String.Format("{0:0.##}", @product.Price)</del><b>
+                                                    @String.Format("{0:0.##}", product.Price - (product.Price / 100) * product.Discount)$
+                                                </b>
+
+                                            </p>
+
+
+                                        }
+                                        else
+                                        {
+                                            <p class="card-title text-warning text-center">Price: <b>@product.Price$</b></p>
+                                        }
+                                        @if (product.Stock < 1)
+                                        {
+                                            <p class="card-title text-bg-warning text-center">Out Of Stock</p>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    
+                                        <a asp-action="Details"
+                                           asp-route-productid="@product.id"
+                                           class="btn btn-primary btn-dark bg-gradient border-1 from control">
+                                            Show Details
+                                        </a>
+                                    
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+<script>
+    const sortButton = document.getElementById('sortButton');
+
+    sortButton.addEventListener('click', function (event) {
+
+        let url = new URL(window.location.href);
+
+        let sortOrder = url.searchParams.get('sort');
+
+        sortOrder = sortOrder === "down" ? "up" : "down";
+
+        url.searchParams.set('sort', sortOrder);
+
+        window.location.href = url.href;
+
+        event.preventDefault();
+    });
+
+
+</script>
+
+@* <style>
+    img {
+        opacity: 0.85;
+    }
+
+        img:hover {
+            opacity: 1.0;
+        }
+</style> *@
+<style>
+
+    .transparent-image {
+        opacity: 0.4; /* Adjust the opacity value as needed */
+    }
+
+</style>

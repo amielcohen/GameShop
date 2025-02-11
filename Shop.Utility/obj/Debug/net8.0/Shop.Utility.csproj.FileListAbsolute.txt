@@ -1,0 +1,12 @@
+C:\Users\hp\source\repos\GameShop\Shop.Utility\bin\Debug\net8.0\Shop.Utility.deps.json
+C:\Users\hp\source\repos\GameShop\Shop.Utility\bin\Debug\net8.0\Shop.Utility.dll
+C:\Users\hp\source\repos\GameShop\Shop.Utility\bin\Debug\net8.0\Shop.Utility.pdb
+C:\Users\hp\source\repos\GameShop\Shop.Utility\obj\Debug\net8.0\Shop.Utility.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\source\repos\GameShop\Shop.Utility\obj\Debug\net8.0\Shop.Utility.AssemblyInfoInputs.cache
+C:\Users\hp\source\repos\GameShop\Shop.Utility\obj\Debug\net8.0\Shop.Utility.AssemblyInfo.cs
+C:\Users\hp\source\repos\GameShop\Shop.Utility\obj\Debug\net8.0\Shop.Utility.csproj.CoreCompileInputs.cache
+C:\Users\hp\source\repos\GameShop\Shop.Utility\obj\Debug\net8.0\Shop.Utility.dll
+C:\Users\hp\source\repos\GameShop\Shop.Utility\obj\Debug\net8.0\refint\Shop.Utility.dll
+C:\Users\hp\source\repos\GameShop\Shop.Utility\obj\Debug\net8.0\Shop.Utility.pdb
+C:\Users\hp\source\repos\GameShop\Shop.Utility\obj\Debug\net8.0\ref\Shop.Utility.dll
+C:\Users\hp\source\repos\GameShop\Shop.Utility\obj\Debug\net8.0\Shop.Utility.csproj.AssemblyReference.cache
